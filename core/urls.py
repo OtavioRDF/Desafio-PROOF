@@ -4,6 +4,6 @@ from .views import index, insert, unbanned
 
 urlpatterns = [
     path('list', index, name="list-ips"),
-    path('ban', insert, name= 'ban-ips'),
-    path('unban', unbanned, name= 'unban-ips')
+    path('insert', insert, name= 'ban-ips'),
+    path('unbanned', unbanned, name= 'unban-ips')
 ]

@@ -17,21 +17,15 @@ def index(request):
     return Response(serialized_ips.data, status= status.HTTP_200_OK)
 
 #endpoint 2: salvar os ips que o usuário não quer que apareçam no endpoint 3
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def insert(request):
-    if request.method == "POST":
-        banned = BannedIpSerializer(data= request.data)
-        if banned.is_valid():
-            banned.save()
-            return Response(status = status.HTTP_201_CREATED)
-        
-        return Response(banned.errors, status= status.HTTP_204_NO_CONTENT)
+    banned = BannedIpSerializer(data= request.data)
+    if banned.is_valid():
+        banned.save()
+        return Response(status = status.HTTP_201_CREATED)
+    
+    return Response(banned.errors, status= status.HTTP_204_NO_CONTENT)
 
-    elif request.method == "GET":
-        bans = BannedIps.objects.all()
-        serialized_bans = BannedIpSerializer(bans, many=True)
-
-        return Response(serialized_bans.data)
 
 #endpoint 3: retorna todos os ips salvos na base de dados, menos os que foram salvos pelo endpoint 2
 @api_view(['GET'])
