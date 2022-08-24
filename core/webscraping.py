@@ -17,17 +17,11 @@ def getIpsTorlist():
         cleanDataBase.delete()         
         
         request = request.text
-
-        results =[]
-        results.append(request.split('\n'))
+        request = request.split('\n')
         
-        try:
-            for i in results:
-                ips = Ips(IPs= i)
-                ips.save()
-                print(request)
-        except:
-            return True
+        for i in request:
+            ips = Ips(IPs= i)
+            ips.save()
 
         return True
 
