@@ -9,6 +9,3 @@ class IpsViewSet(viewsets.ModelViewSet):
     serializer_class = IpSerializer
 
 
-class BannedIpsViewSet(viewsets.ModelViewSet):
-    queryset = Ips.objects.all()
-    serializer_class = IpSerializer

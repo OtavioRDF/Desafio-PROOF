@@ -20,12 +20,12 @@ def index(request):
 @api_view(['POST'])
 def insert(request):
     banned = BannedIpSerializer(data= request.data)
+
     if banned.is_valid():
         banned.save()
-        return Response(status = status.HTTP_201_CREATED)
+        return Response(banned.data, status = status.HTTP_201_CREATED)
     
-    return Response(banned.errors, status= status.HTTP_204_NO_CONTENT)
-
+    return Response(banned.errors, status= status.HTTP_406_NOT_ACCEPTABLE)
 
 #endpoint 3: retorna todos os ips salvos na base de dados, menos os que foram salvos pelo endpoint 2
 @api_view(['GET'])
@@ -33,7 +33,7 @@ def unbanned(request):
     banned = BannedIps.objects.all()
 
     unbanned = []
-    [unbanned.append (k.bannedIPs) for k in banned]
+    [unbanned.append (k.IPs) for k in banned]
     
     difference = (Ips.objects.exclude(IPs__in=unbanned).values())
     
