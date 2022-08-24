@@ -9,21 +9,28 @@ header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
 # Pega os ips das redes externas e as salva na mesma base de dados
 def getIpsTorlist():
     request = requests.get('https://www.dan.me.uk/torlist/', headers= header)
-
+    
     if request.status_code == 403:
         return False
     else:
-        cleanData = Ips.objects.all()
-        cleanData.delete()         
+        cleanDataBase = Ips.objects.all()
+        cleanDataBase.delete()         
         
         request = request.text
 
-        print(request)
+        results =[]
+        results.append(request.split('\n'))
         
-        for i in request:
-            ips = Ips(IPs= i)
-            ips.save()
+        try:
+            for i in results:
+                ips = Ips(IPs= i)
+                ips.save()
+                print(request)
+        except:
+            return True
+
         return True
+
 
 
 def getIpsOnionoo():
