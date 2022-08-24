@@ -37,9 +37,9 @@ def unbanned(request):
     
     difference = (Ips.objects.exclude(IPs__in=unbanned).values())
     
-    serialized_unban = IpSerializer(difference, many=True)
+    serialized_unbanned = IpSerializer(difference, many=True)
 
-    return Response(serialized_unban.data, status= status.HTTP_200_OK)
+    return Response(serialized_unbanned.data, status= status.HTTP_200_OK)
 
 
 

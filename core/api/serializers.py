@@ -9,4 +9,4 @@ class IpSerializer(serializers.ModelSerializer):
 class BannedIpSerializer(serializers.ModelSerializer):
     class Meta:
         model = BannedIps
-        fields = ['id', 'bannedIPs']
+        fields = ['id', 'IPs']
