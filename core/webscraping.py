@@ -1,0 +1,32 @@
+import requests
+from .models import Ips
+
+#Cabeçalho para fazer requisição usando requests
+header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
+    (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36'}
+
+
+# Pega os ips das redes externas e as salva na mesma base de dados
+def getIpsOnionoo():
+    request = requests.get('https://onionoo.torproject.org/summary?limit=5000', headers= header)
+    data_request = request.json()
+    results = [item['a'][0] for item in data_request["relays"] if 'a' in item and item['a']]
+    
+    for i in results:
+        ips = Ips(IPs= i)
+        ips.save()
+    
+
+def getIpsTorlist():
+    request = requests.get('https://www.dan.me.uk/torlist/', headers= header)
+
+    if request.status_code == 403:
+        return False
+    else:
+        cleanData = Ips.objects.all()
+        cleanData.delete() 
+        
+        for i in request:
+            ips = Ips(IPs= i)
+            ips.save()
+        return True
