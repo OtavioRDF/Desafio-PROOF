@@ -32,16 +32,20 @@ def list_all(request):
 @api_view(['GET', 'POST'])
 def ban_ips(request):
     form = BanIpForm
-
+    
+    bannedList = banned()
+    
     if (request.method == 'POST'):
         form = BanIpForm(request.POST)
         
         #banned = BannedIpSerializer(data= request.data)
         if form.is_valid():
             bannedIP= form.cleaned_data['IPs']
-            newBan = BannedIps(IPs = bannedIP)
-            newBan.save()
-            return redirect('home')
+            if bannedIP not in bannedList:
+                newBan = BannedIps(IPs = bannedIP)
+                newBan.save()
+                return redirect('home')
+
             #banned.save()
             #return Response(banned.data, status = status.HTTP_201_CREATED)
     
@@ -54,8 +58,7 @@ def list_unbanned(request):
     unbanned ={}
     banned = BannedIps.objects.all()
 
-    bannedList= []
-    [bannedList.append (k.IPs) for k in banned]
+    bannedList = banned()
     
     unbanned["IP_list"] = (Ips.objects.exclude(IPs__in=bannedList).values())
     
@@ -63,3 +66,10 @@ def list_unbanned(request):
     return render(request,'list_unbanned.html', unbanned)
 
 
+def banned():
+    banned = BannedIps.objects.all()
+
+    bannedList= []
+    [bannedList.append (k.IPs) for k in banned]
+
+    return bannedList
