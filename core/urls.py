@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import index, insert, unbanned
+from .views import index, ban_ips, list_all, list_unbanned
 
 
 urlpatterns = [
-    path('list', index, name='list-ips'),
-    path('ban-ips', insert, name= 'ban-ips'),
-    path('list-unbanned', unbanned, name= 'unbanned-ips')
+    path('', index, name= 'home'),
+    path('ban_ips/', ban_ips, name= 'ban_ips'),
+    path('list', list_all, name= 'list_ips'),
+    #path('ban-ips', insert, name= 'ban_ips'),
+    path('list-unbanned', list_unbanned, name= 'list_unbanned')
 ]

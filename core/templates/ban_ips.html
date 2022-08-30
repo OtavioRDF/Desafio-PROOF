@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %} 
+{% load bootstrap %}
+
+<div class="container-fluid text-center" id="listname">
+  <h1> Ban an IP </h1>
+</div>
+
+<div class="container-fluid text-center">
+  
+  <form action="." method="POST">
+      <input class="form-control banF" type="text" name="IPs">
+
+      <button type="submit" class="btn btn-dark btn-secondary btn-lg banB">BAN</button>
+  </form>
+</div>
+{% endblock %}

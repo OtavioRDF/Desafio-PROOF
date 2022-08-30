@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{% load bootstrap %}
+
+<div class="container-fluid text-center" id="listname">
+  <h1> Unbanned IPs</h1>
+</div>
+
+<div class="container-fluid">
+  <table class="table table-dark table-striped-columns tabela">
+    <tr>
+      <th>ID</th>
+      <th>IPs</th>
+    </tr>
+    {% for ip in IP_list %}
+      <tr>
+        <td> {{ip.id}} </td>
+        <td> {{ip.IPs}} </td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}
