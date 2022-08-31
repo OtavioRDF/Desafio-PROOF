@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-x=n-s#6r#v6sto^=0hk@8u04i5sljqoe8cq%mq7x-82j333*7c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'apiIPS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'desafio',
-        'USER': 'api',
-        'PASSWORD': 'desafio',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432
     }
 }
 
