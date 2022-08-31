@@ -10,13 +10,35 @@
       <th>ID</th>
       <th>IPs</th>
     </tr>
-    {% for ip in IP_list %}
+    {% for ip in page.object_list %}
     <tr>
       <td>{{ip.id}}</td>
       <td>{{ip.IPs}}</td>
     </tr>
     {% endfor %}
   </table>
+
+  {% if page.has_previous %}
+  <p id="paginator">
+    <a
+      class="btn btn-dark"
+      data-bs-toggle="collapse"
+      href="{% url 'list_unbanned' %}?page={{ page.previous_page_number }}"
+    >
+      Previous
+    </a>
+  </p>
+  {% endif %} {% if page.has_next %}
+  <p id="paginator">
+    <a
+      class="btn btn-dark"
+      data-bs-toggle="collapse"
+      href="{% url 'list_unbanned' %}?page={{ page.next_page_number }}"
+    >
+      Next
+    </a>
+  </p>
+  {% endif %}
 </div>
 
 {% endblock %}

@@ -22,15 +22,16 @@ def list_all(request):
     
     #serialized_ips = IpSerializer(ips, many=True)
     iplist = Ips.objects.all()
-    ips_paginator = Paginator(iplist, 30)
+    ips_paginator = Paginator(iplist, 20)
 
     page_number = request.GET.get('page')
     page = ips_paginator.get_page(page_number)
 
-    ips = {
+    ipsList = {
         'page': page
     }
-    return render(request, 'list_all.html', ips)
+    
+    return render(request, 'list_all.html', ipsList)
     #return Response(serialized_ips.data, status= status.HTTP_200_OK)
 
 
@@ -53,7 +54,7 @@ def ban_ips(request):
                 messages.success(request, 'IP banned successfully!')
                 return redirect('home')
             else:
-                messages.error(request, 'ERROR: IP already banned')
+                messages.error(request, 'ERROR: IP already banned!')
                 return render(request, 'ban_ips.html')
             #banned.save()
             #return Response(banned.data, status = status.HTTP_201_CREATED)
@@ -68,7 +69,7 @@ def list_unbanned(request):
 
     unbanned = (Ips.objects.exclude(IPs__in=bannedList).values())
     
-    ips_paginator = Paginator(unbanned, 30)
+    ips_paginator = Paginator(unbanned, 20)
 
     page_number = request.GET.get('page')
     page = ips_paginator.get_page(page_number)

@@ -1,18 +1,28 @@
 body {
     background-color: #878787;
 }
+.nBar, 
+#listname, 
+#paginator, 
+.tHome{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
 
 #listname {
-    color: white;
     margin-top: 5%;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
 }
 
-.nBar {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
+#message{
+    position: relative;
+    top: 80px;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
 }
+
 
 .banF {
     margin-top: 15%;
@@ -33,10 +43,12 @@ body {
     width: 30%;
 }
 
+#paginator{
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .tHome{
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
     font-size: 100%;
     margin-top: 20%;
 }
