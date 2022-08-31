@@ -20,12 +20,12 @@
 
   {% if page.has_previous %}
   <a
-    href="{% url 'list_all' %}?page={{ page.previous_page_number }}"
+    href="{% url 'list_ips' %}?page={{ page.previous_page_number }}"
     id="paginator"
     ><button type="button" class="btn btn-dark">Previous</button></a
   >
   {% endif %} {% if page.has_next %}
-  <a href="{% url 'list_all' %}?page={{ page.next_page_number }}" id="paginator"
+  <a href="{% url 'list_ips' %}?page={{ page.next_page_number }}" id="paginator"
     ><button type="button" class="btn btn-dark">Next</button></a
   >
   {% endif %}
