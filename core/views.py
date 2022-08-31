@@ -4,6 +4,7 @@ from .models import Ips, BannedIps
 from .webscraping import getIpsTorlist, getIpsOnionoo
 from .forms import BanIpForm
 from django.core.paginator import Paginator
+from django.contrib import messages
 # from rest_framework.response import Response
 # from rest_framework import status
 # from .api.serializers import BannedIpSerializer, IpSerializer
@@ -15,15 +16,20 @@ def index(request):
 #endpoint 1: pegar todos os ips das redes externas e salvar em uma base de dados
 @api_view(['GET'])
 def list_all(request):    
-    ips ={}
     
     if getIpsTorlist():
         getIpsOnionoo()
     
-    ips["IP_list"] = Ips.objects.all()
-    
     #serialized_ips = IpSerializer(ips, many=True)
+    iplist = Ips.objects.all()
+    ips_paginator = Paginator(iplist, 30)
 
+    page_number = request.GET.get('page')
+    page = ips_paginator.get_page(page_number)
+
+    ips = {
+        'page': page
+    }
     return render(request, 'list_all.html', ips)
     #return Response(serialized_ips.data, status= status.HTTP_200_OK)
 
@@ -33,7 +39,7 @@ def list_all(request):
 def ban_ips(request):
     form = BanIpForm
     
-    bannedList = banned()
+    bannedList = getBanned()
     
     if (request.method == 'POST'):
         form = BanIpForm(request.POST)
@@ -44,8 +50,11 @@ def ban_ips(request):
             if bannedIP not in bannedList:
                 newBan = BannedIps(IPs = bannedIP)
                 newBan.save()
+                messages.success(request, 'IP banned successfully!')
                 return redirect('home')
-
+            else:
+                messages.error(request, 'ERROR: IP already banned')
+                return render(request, 'ban_ips.html')
             #banned.save()
             #return Response(banned.data, status = status.HTTP_201_CREATED)
     
@@ -55,21 +64,29 @@ def ban_ips(request):
 #endpoint 3: retorna todos os ips salvos na base de dados, menos os que foram salvos pelo endpoint 2
 @api_view(['GET'])
 def list_unbanned(request):
-    unbanned ={}
-    banned = BannedIps.objects.all()
+    bannedList = getBanned()
 
-    bannedList = banned()
+    unbanned = (Ips.objects.exclude(IPs__in=bannedList).values())
     
-    unbanned["IP_list"] = (Ips.objects.exclude(IPs__in=bannedList).values())
-    
+    ips_paginator = Paginator(unbanned, 30)
+
+    page_number = request.GET.get('page')
+    page = ips_paginator.get_page(page_number)
+
+    unbannedIps = {
+        'page': page
+    }
     #return Response({'unbanned': unbanned}, status= status.HTTP_200_OK)
-    return render(request,'list_unbanned.html', unbanned)
+    return render(request,'list_unbanned.html', unbannedIps)
 
 
-def banned():
+
+
+def getBanned():
+
     banned = BannedIps.objects.all()
 
     bannedList= []
     [bannedList.append (k.IPs) for k in banned]
-
+    
     return bannedList
