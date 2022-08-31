@@ -3,7 +3,7 @@ body {
 }
 .nBar, 
 #listname, 
-#paginator, 
+#pagination, 
 .tHome{
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
@@ -43,7 +43,8 @@ body {
     width: 30%;
 }
 
-#paginator{
+#pagination{
+    background-color: black;
     margin-right: auto;
     margin-left: auto;
 }

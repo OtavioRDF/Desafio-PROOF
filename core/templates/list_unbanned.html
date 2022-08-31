@@ -19,19 +19,19 @@
   </table>
 
   {% if page.has_previous %}
-    <p id="paginator">
-      <a class="btn btn-dark" data-bs-toggle="collapse" href="{% url 'list_unbanned' %}?page={{ page.previous_page_number }}" >
-        Previous
-      </a>
-    </p>
+      <nav>
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="{% url 'list_unbanned' %}?page={{ page.previous_page_number }}">Previous</a></li>
+      </ul>
+    </nav>
   {% endif %} 
   
   {% if page.has_next %}
-    <p id="paginator">
-      <a class="btn btn-dark" data-bs-toggle="collapse" href="{% url 'list_unbanned' %}?page={{ page.next_page_number }}" >
-        Next
-      </a>
-    </p>
+      <nav>
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="{% url 'list_unbanned' %}?page={{ page.next_page_number }}">Next</a></li>
+      </ul>
+    </nav>
   {% endif %}
   </div>
 </div>
